@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import ScrollTop from './ScrollTop'
 import { useEffect } from "react";
 import { useState } from "react";
 import UserDetail from "./UserDetail";
@@ -93,7 +94,7 @@ const UserList = () => {
   }
   return (
     <>
-      <div className="flex">
+      <div className="flex ">
         <div className="w-full">
           {loading && <Skeleton/>}
     { !loading &&
@@ -140,7 +141,7 @@ const UserList = () => {
                     </button>
                   </div>
                   <div
-                    className="select-none hidden absolute bg-[var(--bg)] border-2 border-[var(--border-color)]  right-0 z-10 mt-2 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="select-none hidden absolute right-[-2rem] bg-[var(--bg)] border-2 border-[var(--border-color)]  right-0 z-10 mt-2 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     ref={sortMenu}
                     aria-orientation="vertical"
@@ -186,7 +187,8 @@ const UserList = () => {
           )}
           {users.length > 0 && (
             // Creating a list if users are available
-            <ul>
+            <ul className="relative">
+              <ScrollTop/>
               {users.map((item) => {
                 return (
                   <li

@@ -20,7 +20,7 @@ const ImageFallback = ({source,className}) => {
         className={className}
         src={srcToUse}
         onLoad={()=>loaded.current=true}
-        alt="/"
+        alt=""
       />
     </>
   );
