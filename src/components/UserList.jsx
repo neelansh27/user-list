@@ -5,16 +5,18 @@ import UserDetail from "./UserDetail";
 import "../css/UserList.css";
 import { IoMdPerson } from "react-icons/io";
 import { PiSuitcaseSimpleBold } from "react-icons/pi";
-import { FaRegImage } from "react-icons/fa6";
+import { FaArrowDown, FaRegImage } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import fallback from "../assets/default.png";
 import notFound2 from "../assets/nothing_found.png";
+import { FaArrowUp } from "react-icons/fa";
+import ImageFallback from "./ImageFallback";
 const UserList = () => {
   const allUsers = useRef(null);
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [activeUser, setActiveUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState(true)
   const sortMenu = useRef(null);
   // const [showSort,setShowSort]
   useEffect(() => {
@@ -50,6 +52,10 @@ const UserList = () => {
       );
     }
   }, [search]);
+  function changeOrder(){
+    setOrder(!order);
+    setUsers(users.slice().reverse());
+  }
   // function performSearch() {
   //   setUsers(allUsers.current.filter((item)=>{
   //       return item.profile.username.toLowerCase().startsWith(search.toLowerCase());
@@ -61,28 +67,29 @@ const UserList = () => {
   //     performSearch()
   //   }
   // }
-  function performSort(e){
-    if(e.target.textContent==='Username'){
-      setUsers(users.slice().sort((a,b)=>{
+  function performSort(e) {
+    if (e.target.textContent === "Username") {
+      setUsers(
+        users.slice().sort((a, b) => {
           return a.profile.username.localeCompare(b.profile.username);
-      }))
+        }),
+      );
     } else {
-      setUsers(users.slice().sort((a,b)=>{
-        // Subtracting b from a to get newest accounts first
+      setUsers(
+        users.slice().sort((a, b) => {
+          // Subtracting b from a to get newest accounts first
           return new Date(b.createdAt) - new Date(a.createdAt);
-      }))
+        }),
+      );
     }
     toggleSortMenu();
   }
-  function toggleSortMenu(){
-    if (sortMenu.current.classList.contains('show-menu')){
-      sortMenu.current.classList.remove('show-menu')
+  function toggleSortMenu() {
+    if (sortMenu.current.classList.contains("show-menu")) {
+      sortMenu.current.classList.remove("show-menu");
     } else {
-      sortMenu.current.classList.add('show-menu');
+      sortMenu.current.classList.add("show-menu");
     }
-  }
-  function handleImgError(e) {
-    e.target.src = fallback;
   }
   return (
     <>
@@ -101,12 +108,12 @@ const UserList = () => {
                   placeholder="Search by username.."
                 />
               </div>
-              <div>
-                <div className="relative inline-block text-left">
-                  <div>
+            <div className="flex gap-2">
+                <div className="relative h-full inline-block text-left">
+                  <div className="h-full">
                     <button
                       type="button"
-                      className="whitespace-nowrap select-none inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold text-white shadow-sm ring-1 ring-inset ring-gray"
+                      className="whitespace-nowrap select-none inline-flex h-full w-full justify-center gap-x-1.5 rounded-md px-3 py-2.5 font-semibold text-white shadow-sm ring-1 ring-inset ring-gray"
                       id="menu-button"
                       aria-expanded="true"
                       onClick={toggleSortMenu}
@@ -128,7 +135,7 @@ const UserList = () => {
                     </button>
                   </div>
                   <div
-                    className="show-menu select-none hidden absolute bg-[var(--bg)] border-2 border-[var(--border-color)]  right-0 z-10 mt-2 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="select-none hidden absolute bg-[var(--bg)] border-2 border-[var(--border-color)]  right-0 z-10 mt-2 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     ref={sortMenu}
                     aria-orientation="vertical"
@@ -140,7 +147,7 @@ const UserList = () => {
                         className="block px-4 py-3 hover:bg-[var(--hover-bg)] text-sm text-white"
                         role="menuitem"
                         tabIndex="-1"
-            onClick={performSort}
+                        onClick={performSort}
                         id="menu-item-0"
                       >
                         Username
@@ -149,15 +156,18 @@ const UserList = () => {
                         className="block px-4 py-3 hover:bg-[var(--hover-bg)] text-sm text-white"
                         role="menuitem"
                         tabIndex="-1"
-            onClick={performSort}
+                        onClick={performSort}
                         id="menu-item-1"
                       >
                         Account Age
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
+              <div onClick={changeOrder} className="order cursor-pointer flex text-lg items-center border border-[var(--border-color)] px-3 py-1 rounded-md">
+            {(order) ? <FaArrowUp/>:<FaArrowDown/>}
+              </div>
+            </div>
             </div>
           )}
           {!loading && users.length === 0 && (
@@ -181,19 +191,14 @@ const UserList = () => {
                   >
                     <div className="relative isolate">
                       <FaRegImage className="img-loader absolute text-xl animate-pulse top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[-1]" />
-                      <img
-                        className="w-16 rounded-full"
-                        src={item.avatar}
-                        alt=""
-                        onError={handleImgError}
-                      />
+                  <ImageFallback source={item.avatar} className={"w-16 rounded-full"} key={item.id+item.username}/>
                     </div>
                     <div className="w-[80%] my-auto">
-                      <div className="username flex items-center gap-3 font-semibold">
-                        <span className="svg-container">
+                      <div className="username flex items-center gap-3 mb-2 font-semibold">
+                        <span className="svg-container text-lg">
                           <IoMdPerson />
                         </span>
-                        <span className="text-sky-400">
+                        <span className="text-sky-400 text-lg">
                           {item.profile.username}
                         </span>
                       </div>
@@ -201,7 +206,7 @@ const UserList = () => {
                         <span>
                           <PiSuitcaseSimpleBold />
                         </span>
-                        <span>{item.jobTitle}</span>
+                        <span className="text-sm">{item.jobTitle}</span>
                       </div>
                     </div>
                   </li>
