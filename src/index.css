@@ -17,3 +17,9 @@ html,body {
   color: white;
   font-family: "Poppins", sans-serif;
 }
+
+@layer {
+  .heading {
+    @apply font-semibold text-sky-400 mb-2;
+  }
+}

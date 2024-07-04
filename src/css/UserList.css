@@ -21,4 +21,20 @@ input[type='search']{
   background-color: var(--sidebar-bg);
   border-left: 4px solid var(--border-color);
   height: 100vh;
+  /* scrollbar-width: 10px; */
+  /* scrollbar-color: var(--bg) rgba(55,76,128,0.8); */
+}
+.sidebar-container::-webkit-scrollbar{
+  width: 10px;
+}
+.sidebar-container::-webkit-scrollbar-track {
+  background: #db2777;
+  border-radius: 10px;
+}
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(65, 86, 158,0.9);    
+}
+.sidebar-container::-webkit-scrollbar-thumb {
+  background-color: rgba(55, 76, 128,0.7);    
+  border-radius: 20px; 
 }

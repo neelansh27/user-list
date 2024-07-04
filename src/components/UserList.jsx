@@ -7,6 +7,7 @@ import { IoMdPerson } from "react-icons/io";
 import { PiSuitcaseSimpleBold } from "react-icons/pi";
 import { FaRegImage } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import fallback from '../assets/default.png';
 const UserList = () => {
   const allUsers = useRef(null);
   const [users, setUsers] = useState([]);
@@ -58,8 +59,7 @@ const UserList = () => {
   //   }
   // }
   function handleImgError(e) {
-    e.target.src =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/768px-Windows_10_Default_Profile_Picture.svg.png?20221210150350";
+    e.target.src = fallback;
   }
   return (
     <>
@@ -122,8 +122,8 @@ const UserList = () => {
             </ul>
           )}
         </div>
-        <div className={`${activeUser ? "w-[40%]":"w-0"} sidebar-container sticky top-0`}>
-          <IoClose onClick={()=>{setActiveUser(null)}} className="sticky top-3 ml-2 text-white z-10 text-2xl"/>
+        <div className={`${activeUser ? "lg:w-[40%] sm:w-[70%]":"w-0 border-none"} overflow-y-scroll  sidebar-container sticky pb-6 top-0`}>
+          <IoClose onClick={()=>{setActiveUser(null)}} className={`${activeUser ? 'inline':'hidden'} sticky top-3 ml-2 text-white z-10 text-2xl`}/>
           {activeUser != null && <UserDetail user={activeUser} />}
     </div>
       </div>
