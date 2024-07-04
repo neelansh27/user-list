@@ -54,6 +54,14 @@ input[type='search']{
   white-space: nowrap;
   transform: translateX(-50%);
 }
+.flip{
+  rotate: -12deg;
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
 .show-menu{
   display: block !important;
   animation: pop 0.2s ease-in-out;

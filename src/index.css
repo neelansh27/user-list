@@ -11,6 +11,8 @@
 --hover-bg: rgba(53, 183, 220,0.3);
 --fg: white;
 --sidebar-bg:#1f1f3f; 
+--skeleton-bg: rgba(100, 105, 114,0.8);
+--skeleton-bg-dark:rgba(100, 105, 114,1);
 }
 
 html,body {

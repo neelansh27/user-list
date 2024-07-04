@@ -8,8 +8,9 @@ import { PiSuitcaseSimpleBold } from "react-icons/pi";
 import { FaArrowDown, FaRegImage } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import notFound2 from "../assets/nothing_found.png";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp, FaSearch, FaSearchPlus } from "react-icons/fa";
 import ImageFallback from "./ImageFallback";
+import Skeleton from "./Skeleton";
 const UserList = () => {
   const allUsers = useRef(null);
   const [users, setUsers] = useState([]);
@@ -18,7 +19,6 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(true)
   const sortMenu = useRef(null);
-  // const [showSort,setShowSort]
   useEffect(() => {
     fetch("https://602e7c2c4410730017c50b9d.mockapi.io/users")
       .then((res) => res.json())
@@ -95,7 +95,12 @@ const UserList = () => {
     <>
       <div className="flex">
         <div className="w-full">
-          {loading && <div>Loading...</div>}
+          {loading && <Skeleton/>}
+    { !loading &&
+    <div className="font-semibold text-3xl flex justify-center pt-7"> 
+      User Finder 
+      <span className="px-2 flip text-sky-400"><FaSearch/></span>
+    </div>}
           {!loading && (
             <div className="flex flex-col md:flex-row mx-10 gap-4 px-3 py-4">
               <div className="search-box w-full flex">
