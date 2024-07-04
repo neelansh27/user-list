@@ -198,14 +198,14 @@ const UserList = () => {
                   >
                     <div className="relative isolate">
                       <FaRegImage className="img-loader absolute text-xl animate-pulse top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[-1]" />
-                  <ImageFallback source={item.avatar} className={"w-16 rounded-full"} key={item.id+item.username}/>
+                  <ImageFallback source={item.avatar} className={"w-16 my-auto rounded-full"} key={item.id+item.username}/>
                     </div>
-                    <div className="w-[80%] my-auto">
-                      <div className="username flex items-center gap-3 mb-2 font-semibold">
+                    <div className="w-[80%] my-auto break-words">
+                      <div className="username flex items-center gap-3 mb-2 font-semibold break-words">
                         <span className="svg-container text-lg">
                           <IoMdPerson />
                         </span>
-                        <span className="text-sky-400 text-lg">
+                        <span className="text-sky-400 text-sm sm:text-lg break-all">
                           {item.profile.username}
                         </span>
                       </div>
@@ -213,7 +213,7 @@ const UserList = () => {
                         <span>
                           <PiSuitcaseSimpleBold />
                         </span>
-                        <span className="text-sm">{item.jobTitle}</span>
+                        <span className=" text-[0.75rem] sm:text-sm">{item.jobTitle}</span>
                       </div>
                     </div>
                   </li>
