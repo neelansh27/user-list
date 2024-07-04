@@ -7,14 +7,16 @@ import { IoMdPerson } from "react-icons/io";
 import { PiSuitcaseSimpleBold } from "react-icons/pi";
 import { FaRegImage } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import fallback from '../assets/default.png';
-import notFound2 from '../assets/nothing_found.png'
+import fallback from "../assets/default.png";
+import notFound2 from "../assets/nothing_found.png";
 const UserList = () => {
   const allUsers = useRef(null);
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [activeUser, setActiveUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const sortMenu = useRef(null);
+  // const [showSort,setShowSort]
   useEffect(() => {
     fetch("https://602e7c2c4410730017c50b9d.mockapi.io/users")
       .then((res) => res.json())
@@ -59,6 +61,26 @@ const UserList = () => {
   //     performSearch()
   //   }
   // }
+  function performSort(e){
+    if(e.target.textContent==='Username'){
+      setUsers(users.slice().sort((a,b)=>{
+          return a.profile.username.localeCompare(b.profile.username);
+      }))
+    } else {
+      setUsers(users.slice().sort((a,b)=>{
+        // Subtracting b from a to get newest accounts first
+          return new Date(b.createdAt) - new Date(a.createdAt);
+      }))
+    }
+    toggleSortMenu();
+  }
+  function toggleSortMenu(){
+    if (sortMenu.current.classList.contains('show-menu')){
+      sortMenu.current.classList.remove('show-menu')
+    } else {
+      sortMenu.current.classList.add('show-menu');
+    }
+  }
   function handleImgError(e) {
     e.target.src = fallback;
   }
@@ -68,26 +90,85 @@ const UserList = () => {
         <div className="w-full">
           {loading && <div>Loading...</div>}
           {!loading && (
-            <div className="flex flex-col md:flex-row w-full px-3 py-4">
+            <div className="flex flex-col md:flex-row mx-10 gap-4 px-3 py-4">
               <div className="search-box w-full flex">
                 {/* onKeyDown={handleKeyDown}  add this to use enter key for search*/}
                 <input
-                  className="w-[90%] mx-auto p-2.5 rounded-xl"
+                  className="w-full p-2.5 rounded-xl"
                   type="search"
                   value={search}
                   onChange={handleInput}
                   placeholder="Search by username.."
                 />
               </div>
-            <div>
-            <select id="sorting" name="sort">
-              <option value="default" disabled>Username</option>
-              <option value="default" disabled>Joining</option>
-            </select>
-            </div>
+              <div>
+                <div className="relative inline-block text-left">
+                  <div>
+                    <button
+                      type="button"
+                      className="whitespace-nowrap select-none inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold text-white shadow-sm ring-1 ring-inset ring-gray"
+                      id="menu-button"
+                      aria-expanded="true"
+                      onClick={toggleSortMenu}
+                      aria-haspopup="true"
+                    >
+                      Sort by
+                      <svg
+                        className="-mr-1 h-5 w-5 text-gray-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    className="show-menu select-none hidden absolute bg-[var(--bg)] border-2 border-[var(--border-color)]  right-0 z-10 mt-2 w-40 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    ref={sortMenu}
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabIndex="-1"
+                  >
+                    <div className="" role="none">
+                      <div
+                        className="block px-4 py-3 hover:bg-[var(--hover-bg)] text-sm text-white"
+                        role="menuitem"
+                        tabIndex="-1"
+            onClick={performSort}
+                        id="menu-item-0"
+                      >
+                        Username
+                      </div>
+                      <div
+                        className="block px-4 py-3 hover:bg-[var(--hover-bg)] text-sm text-white"
+                        role="menuitem"
+                        tabIndex="-1"
+            onClick={performSort}
+                        id="menu-item-1"
+                      >
+                        Account Age
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
-          {!loading && users.length===0 && <div className="not-found"><img className="w-[50%] max-w-[600px] mx-auto" src={notFound2} alt='not-found'/></div>}
+          {!loading && users.length === 0 && (
+            <div className="not-found">
+              <img
+                className="w-[50%] max-w-[600px] mx-auto"
+                src={notFound2}
+                alt="not-found"
+              />
+            </div>
+          )}
           {users.length > 0 && (
             // Creating a list if users are available
             <ul>
@@ -129,10 +210,17 @@ const UserList = () => {
             </ul>
           )}
         </div>
-        <div className={`${activeUser ? "lg:w-[50%] md:w-[70%]":"w-0 border-none"} overflow-y-scroll  sidebar-container sticky pb-6 top-0`}>
-          <IoClose onClick={()=>{setActiveUser(null)}} className={`${activeUser ? 'inline':'hidden'} sticky top-3 ml-2 text-white z-10 text-2xl`}/>
+        <div
+          className={`${activeUser ? "lg:w-[50%] md:w-[70%]" : "w-0 border-none"} overflow-y-scroll  sidebar-container sticky pb-6 top-0`}
+        >
+          <IoClose
+            onClick={() => {
+              setActiveUser(null);
+            }}
+            className={`${activeUser ? "inline" : "hidden"} cursor-pointer sticky top-3 ml-2 text-white z-10 text-2xl`}
+          />
           {activeUser != null && <UserDetail user={activeUser} />}
-    </div>
+        </div>
       </div>
     </>
   );

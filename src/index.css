@@ -8,6 +8,7 @@
 --border-color: rgba(21, 122, 207,1);
 --shadow-color: rgba(21, 122, 207,0.5);
 --bg: #0f172a;
+--hover-bg: rgba(53, 183, 220,0.3);
 --fg: white;
 --sidebar-bg:#1f1f3f; 
 }
