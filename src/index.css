@@ -4,3 +4,16 @@
 *{
   box-sizing: border-box;
 }
+:root {
+--border-color: rgba(21, 122, 207,1);
+--shadow-color: rgba(21, 122, 207,0.5);
+--bg: #0f172a;
+--fg: white;
+--sidebar-bg:#1f1f3f; 
+}
+
+html,body {
+  background: var(--bg);
+  color: white;
+  font-family: "Poppins", sans-serif;
+}

@@ -1,11 +1,10 @@
 import './App.css'
+import UserList from './components/UserList'
 
 function App() {
   return (
     <>
-    <div className='flex bg-black text-white justify-center items-center h-[100vh] w-[100vw]'>
-    Halo
-    </div>
+    <UserList/>
     </>
   )
 }
