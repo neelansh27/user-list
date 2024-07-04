@@ -187,10 +187,10 @@ const UserList = () => {
           {users.length > 0 && (
             // Creating a list if users are available
             <ul>
-              {users.map((item, idx) => {
+              {users.map((item) => {
                 return (
                   <li
-                    key={idx}
+                    key={item.id+item.profile.username}
                     onClick={() => changeActive(item)}
                     className="user-box flex gap-2 rounded-2xl select-none mb-5 p-4 w-[90%] mx-auto"
                   >

@@ -8,11 +8,11 @@ const ImageFallback = ({source,className}) => {
       if (!loaded.current){
         setSrcToUse(fallback);
       }
-    },2000)
+    },2500)
   },[])
-  function handleImgError(e) {
-    e.target.src = fallback;
-  }
+  // function handleImgError(e) {
+  //   e.target.src = fallback;
+  // }
   return (
     <>
       <img
@@ -20,8 +20,7 @@ const ImageFallback = ({source,className}) => {
         className={className}
         src={srcToUse}
         onLoad={()=>loaded.current=true}
-        alt="avatar"
-        onError={handleImgError}
+        alt="/"
       />
     </>
   );

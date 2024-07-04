@@ -23,6 +23,6 @@ html,body {
 
 @layer {
   .heading {
-    @apply font-semibold text-sky-400 mb-2;
+    @apply font-semibold text-sky-400 mb-2 flex items-center gap-1;
   }
 }
