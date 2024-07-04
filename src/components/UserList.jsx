@@ -8,6 +8,7 @@ import { PiSuitcaseSimpleBold } from "react-icons/pi";
 import { FaRegImage } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import fallback from '../assets/default.png';
+import notFound2 from '../assets/nothing_found.png'
 const UserList = () => {
   const allUsers = useRef(null);
   const [users, setUsers] = useState([]);
@@ -66,7 +67,6 @@ const UserList = () => {
       <div className="flex">
         <div className="w-full">
           {loading && <div>Loading...</div>}
-          {!loading && users.length == 0 && <div>No data to show</div>}
           {!loading && (
             <div className="flex flex-col md:flex-row w-full px-3 py-4">
               <div className="search-box w-full flex">
@@ -79,8 +79,15 @@ const UserList = () => {
                   placeholder="Search by username.."
                 />
               </div>
+            <div>
+            <select id="sorting" name="sort">
+              <option value="default" disabled>Username</option>
+              <option value="default" disabled>Joining</option>
+            </select>
+            </div>
             </div>
           )}
+          {!loading && users.length===0 && <div className="not-found"><img className="w-[50%] max-w-[600px] mx-auto" src={notFound2} alt='not-found'/></div>}
           {users.length > 0 && (
             // Creating a list if users are available
             <ul>
@@ -122,7 +129,7 @@ const UserList = () => {
             </ul>
           )}
         </div>
-        <div className={`${activeUser ? "lg:w-[40%] sm:w-[70%]":"w-0 border-none"} overflow-y-scroll  sidebar-container sticky pb-6 top-0`}>
+        <div className={`${activeUser ? "lg:w-[50%] md:w-[70%]":"w-0 border-none"} overflow-y-scroll  sidebar-container sticky pb-6 top-0`}>
           <IoClose onClick={()=>{setActiveUser(null)}} className={`${activeUser ? 'inline':'hidden'} sticky top-3 ml-2 text-white z-10 text-2xl`}/>
           {activeUser != null && <UserDetail user={activeUser} />}
     </div>

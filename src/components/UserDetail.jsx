@@ -37,7 +37,7 @@ const UserDetail = ({ user }) => {
         <div className="relative isolate">
           <FaRegImage className="img-loader absolute text-4xl animate-pulse top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[-1]" />
           <img
-            className="w-full max-w-[20vw] min-w-[200px] mx-auto rounded-full p-10"
+            className="w-full max-w-[20vw] min-w-[250px] mx-auto rounded-full p-10"
             src={user.avatar}
             alt="avatar"
             onError={handleImgError}
