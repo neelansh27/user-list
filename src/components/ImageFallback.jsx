@@ -8,7 +8,7 @@ const ImageFallback = ({source,className}) => {
       if (!loaded.current){
         setSrcToUse(fallback);
       }
-    },2500)
+    },5000)
   },[])
   // function handleImgError(e) {
   //   e.target.src = fallback;
